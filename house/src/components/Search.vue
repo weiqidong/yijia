@@ -90,7 +90,6 @@ export default {
   margin-left: 25%;
   margin-top: 250px;
   width:920px;
-  background-color:rgba(87, 24, 139,0.5);
 }
 .lis{
   list-style: none;
