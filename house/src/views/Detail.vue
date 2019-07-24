@@ -2,7 +2,10 @@
   <div class="bgs">
     <navtop></navtop> 
     <div>
-      <div class="bread">
+      <div>
+      <img :src="'http://127.0.0.1:3000/'+lista[0].hic" alt="">
+    </div>
+      <div>
         <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>{{cname}}</el-breadcrumb-item>
@@ -95,8 +98,7 @@ export default {
   },
   mounted(){
     one:{
-     
-
+      console.log(this.value7)
       var obj={hid:this.hid}
       console.log(obj)
       this.axios.get("/del",{params:obj}).then(res=>{
@@ -121,7 +123,9 @@ export default {
  .bgs{
   background-color: #fff
  }
-
+img{
+  width: 100%;
+}
  .bread{
    padding-top: 100px;
    padding-left: 10%;

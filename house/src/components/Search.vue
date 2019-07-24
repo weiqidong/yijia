@@ -1,7 +1,13 @@
 <template>
   <div class="search">
     <ul class="search-ul">
-      <li class="lis"><el-input v-model="input" placeholder="目的地/景点/关键词"></el-input></li>
+      <li class="lis"><el-autocomplete
+      class="inline-input"
+      v-model="state1"
+      :fetch-suggestions="querySearch"
+      placeholder="请输入内容"
+      @focus="handleSelect"
+    ></el-autocomplete></li>
       <li class="lis"><el-date-picker
       v-model="value7"
       type="daterange"
@@ -33,8 +39,9 @@
 export default {
   data(){
     return{
+      restaurants: [],
       select: '',
-       input: '',
+       state1: '',
      pickerOptions2: {
           shortcuts: [{
             text: '最近一周',
@@ -66,10 +73,16 @@ export default {
     }
   },
   methods:{
+     querySearch(queryString, cb) {
+        var restaurants = this.restaurants;
+        var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+        // 调用 callback 返回建议列表的数据
+        cb(results);
+      },
     search(){
-      var cname=this.input;
+      var cname=this.state1;
       var obj={cname:cname}
-      
+      console.log((this.value7[1]-this.value7[0])/1000/3600/24)
       this.axios.get("/abs",{params:obj}).then(res=>{
         var cid=res.data.data[0].cid;
         console.log(cid)
@@ -78,8 +91,21 @@ export default {
         sessionStorage.setItem("cname",cname)
        this.$router.push("/details")
       })
+    },
+    handleSelect(item) {
+       this.axios.get('/city').then(res=>{
+         console.log(res)
+       })
+      },
+     loadAll() {
+        return [
+          {"value":""}
+        ];
+      },
+  },
+  mounted() {
+      this.restaurants = this.loadAll();
     }
-  }
 }
 </script>
 <style scoped>
