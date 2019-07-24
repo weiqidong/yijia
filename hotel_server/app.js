@@ -256,12 +256,6 @@ server.get("/del",(req,res)=>{
         res.send({code:1,data:result})
     })
 })
-
-
-
-
-
-
 /*
 //7.查询指定用户购物车列表
 server.get("/cart", (req, res) => {
@@ -279,8 +273,6 @@ server.get("/cart", (req, res) => {
         res.send({ code: 1, data: result })
     })
 })
-
-
 //8.删除购物车中商品
 server.get("/delItem", (req, res) => {
     //8.1.参数 购物车id
@@ -298,8 +290,6 @@ server.get("/delItem", (req, res) => {
         }
     })
 })
-
-
 //9.删除购物车中多个商品
 server.get("/delAll", (req, res) => {
     //9.1参数
@@ -316,3 +306,21 @@ server.get("/delAll", (req, res) => {
         }
     })
 });*/
+//10.查询yijia_house中的城市
+server.get("/yijia_house",(req,res)=>{
+    var sql=`SELECT cid FROM yijia_house where chara=1`;
+    pool.query(sql,(err,result)=>{
+        if(err) throw err;
+        var arr=[];
+        for(var i=0;i<result.length;i++){
+            arr.push(result[i].cid);
+        }
+        console.log(arr);
+        var sql="SELECT cname FROM city WHERE cid IN(?)";
+        pool.query(sql,[arr],(err,result)=>{
+            if(err) throw err;
+            console.log(result);
+            res.send({code:1,data:result})
+        })
+    })
+});

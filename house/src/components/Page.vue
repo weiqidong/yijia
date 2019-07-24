@@ -44,7 +44,7 @@
         var obj={phone:u,upwd:p}
       this.axios.get(url,{ params:obj}).then(result=>{
         if(result.data.code>0){
-        this.$router.push("/");
+        this.$router.push("/")
         }else {        
         this.upwdt="账号或密码不正确"
        } 

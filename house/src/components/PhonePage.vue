@@ -37,7 +37,7 @@
         var obj={phone:u }
         this.axios.get(url,{params:obj}).then(result=>{
         if(result.data.code>0){
-        this.$router.push("/")
+        this.$router.push("/");
         }else {        
         this.phonet="账号或密码不正确"
        } 
