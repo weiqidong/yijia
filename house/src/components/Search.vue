@@ -69,7 +69,8 @@ export default {
             }
           }]
         },
-        value7: ''    
+        value7: '' ,
+        citys:[]   
     }
   },
   methods:{
@@ -94,13 +95,15 @@ export default {
     },
     handleSelect(item) {
        this.axios.get('/city').then(res=>{
-         console.log(res)
+         citys=res.data.data
        })
       },
      loadAll() {
+       for(var item of citys){
         return [
-          {"value":""}
+          {"value":item}
         ];
+        }
       },
   },
   mounted() {
