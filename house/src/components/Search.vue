@@ -99,11 +99,10 @@ export default {
        })
       },
      loadAll() {
-       for(var item of citys){
         return [
           {"value":item}
         ];
-        }
+        
       },
   },
   mounted() {
