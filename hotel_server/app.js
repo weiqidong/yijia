@@ -195,7 +195,7 @@ server.get("/product", (req, res) => {
 
     })
 })
-*/
+
 server.get('/abs', (req, res) => {
     var obj = req.query;
     console.log(obj)
@@ -206,7 +206,7 @@ server.get('/abs', (req, res) => {
         res.send({ code: 1, data: result })
     })
 })
-
+*/
 
 server.get("/details",(req,res)=>{
     var obj=req.query;
@@ -224,6 +224,7 @@ server.get("/product", (req, res) => {
     var pno = req.query.pno;
     var ps = req.query.pageSize;
     var t=req.query.cid;
+    console.log(t)
     // 9.2：设置默认值
     if (!pno) { pno = 1 };
     if (!ps) { ps = 9 };

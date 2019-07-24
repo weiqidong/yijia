@@ -274,7 +274,7 @@ export default {
 
   methods:{
     loadMore(){//加载更多数据
-      var url="product";
+      var url="/product";
       this.pno++;
       var obj={pno:this.pno,pageSize:this.ps,cid:this.cid};
       this.axios.get(url,{params:obj}).then(result=>{
@@ -285,7 +285,7 @@ export default {
       })
     },
     loadSlow(){
-      var url="product";
+      var url="/product";
       this.pno--;
       var obj={pno:this.pno,pageSize:this.ps,cid:this.cid};
       this.axios.get(url,{params:obj}).then(result=>{

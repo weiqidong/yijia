@@ -17,6 +17,7 @@ import Login from './views/Login.vue'
 import Search from './components/Search.vue'
 import Details from './views/Details.vue'
 import Detail from './views/Detail.vue'
+import Details_null from './components/Details_null'
 Vue.use(Router)
 
 export default new Router({
@@ -115,5 +116,9 @@ export default new Router({
     
     component: Detail
 },
+  {
+    path:"/null",
+    component:Details_null
+  }
   ]
 })
