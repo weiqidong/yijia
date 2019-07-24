@@ -10,7 +10,7 @@
         </ul>
         <ul class="nav-right">
             <li class="reg"><router-link tag="a" :to="'/reg'">注册</router-link></li>
-            <li class="login"><router-link tag="a" :to="'/Login'">登录</router-link></li>
+            <li class="login">{{l1}}</li>
         </ul>
     </div>
 </template>
@@ -18,8 +18,19 @@
 export default {
     name:"navgs",
     data(){
-        return{}
-    }
+        return{
+            l1:""
+        }
+    },
+    created() {
+        console.log(sessionStorage.length)
+        if(sessionStorage.length>0){
+            this.l1=sessionStorage.getItem("phone")+`<router-link tag="a" :to="'/Login'">退出</router-link>`;
+        }else{
+            this.l1=`<router-link tag="a" :to="'/Login'">登录</router-link>`
+        }
+        console.log(l1);
+    },
 }
 </script>
 <style scoped>

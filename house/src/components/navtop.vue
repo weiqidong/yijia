@@ -10,7 +10,7 @@
         </ul>
         <ul class="nav-right">
             <li class="reg"><router-link tag="a" :to="'/reg'">注册</router-link></li>
-            <li class="login"><router-link tag="a" :to="'/Login'">登录</router-link></li>
+            <li class="login" @click="logout">{{lo}}<router-link tag="a" :to="l">{{c}}</router-link></li>
         </ul>
     </div>
 </template>
@@ -18,8 +18,33 @@
 export default {
     name:"navtop",
     data(){
-        return{}
-    }
+        return{
+            lo:"",
+            l:"/Login",
+            c:"登录",
+            ad:false
+        }
+    },
+    created() {
+       this.load(); 
+    },
+    methods: {
+        load(){
+            if(sessionStorage.length>0){
+            this.lo=sessionStorage.getItem("phone")+",";
+            this.c="退出";
+            this.l="/";
+            this.ad=true;
+            console.log(this.ad);
+            }
+        },
+        logout(){
+            if(this.l=="/"){
+                sessionStorage.removeItem("phone");
+                location.reload();
+            }
+        }
+    },
 }
 </script>
 <style scoped>
@@ -66,7 +91,7 @@ export default {
     background-color: #3d97e3;
     color: #fff;
     font-size: 16px;
-    margin-right: 180px;
+    margin-right: 200px;
 }
 .nav a:hover{
           color:#fb6720;
