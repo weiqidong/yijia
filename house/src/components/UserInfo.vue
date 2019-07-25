@@ -80,9 +80,18 @@
                             </div>
                         </el-card>
 
-                        <el-form ref="form" :model="form" label-width="80px">
-                            <el-form-item label="真实姓名">
-                                <el-input v-model="form.user_name" size="medium"></el-input>
+                        <el-form ref="form" :model="form" label-width="120px">
+                            <el-form-item label="真实姓名：">
+                                <el-input v-model="form.user_name"></el-input>
+                            </el-form-item>
+                            <el-form-item label="家乡：">
+                                <el-cascader
+                                    expand-trigger="hover"
+                                    :options="options"
+                                    v-model="selectedOptions2"
+                                    @click="getaddr"
+                                    @change="handleChange">
+                                </el-cascader>
                             </el-form-item>
                         </el-form>
                     </el-main>
@@ -99,14 +108,43 @@
                 phone:"15621875194",
                 form:{
                     user_name:""
-                }
+                },
+                options: [{
+                    value: '北京',
+                    label: '北京',
+                    children: [{value:'朝阳区',label:'朝阳区'},]
+                    }],
+                selectedOptions2: []
             }
-        }
+        },
+        methods: {
+            handleChange(value) {
+                console.log(value);
+            },
+            getaddr(){
+                
+            }
+
+        },
     }
     </script>
     <style>
-    .el-input--medium{
-        width:100px;
+    .el-form .el-cascader .el-input__suffix{
+        left:210px;
+    }
+    .el-form .el-cascader .el-input__inner{
+        width:250px;
+    }
+    .el-form .el-form-item__label{
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .el-form{
+        margin-top:50px;
+        margin-left:50px;
+    }
+    .el-form .el-input{
+        width:30%;
     }
     .inf ul li{
         margin-top:20px;
