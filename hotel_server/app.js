@@ -165,6 +165,8 @@ server.get('/city', (req, res) => {
         res.send({ code: 1, data: result });
     })
 })
+
+
 server.get('/regs', (req, res) => {
     var sql = "SELECT * FROM facility_service";
     pool.query(sql, (err, result) => {
@@ -230,7 +232,7 @@ server.get("/product", (req, res) => {
     if (!ps) { ps = 9 };
     // 9.3：创建两条sql语句执行，嵌套完成
     var obj = { code: 1, msg: "查询成功" }
-    var sql="SELECT title,hic,price,addr_detail,hid FROM yijia_house WHERE cid=? LIMIT ?,?"
+    var sql="SELECT title,hic,price,addr_detail,h_layout,h_grade,Layout,hid FROM yijia_house WHERE cid=? LIMIT ?,?"
     var offset = (pno - 1) * ps;
     ps = parseInt(ps);
     pool.query(sql, [t,offset,ps], (err, result) => {
@@ -248,6 +250,21 @@ server.get("/product", (req, res) => {
         // 9.4：返回值
         // {code:1,msg:"查询成功",data[],pageCount:11}
 })
+
+
+
+// 10:查询房屋级别的信息  h_grade
+server.get("/house_rank",(req,res)=>{
+    var rank=req.query;
+    //var n=req.query.cid;
+    var sql="SELECT h_grade FROM yijia_house?"
+    pool.query(sql,[rank],(err,result)=>{
+        if(err) throw err;
+        res.send({code:1,data:result})
+    })
+})
+
+
 server.get("/del",(req,res)=>{
     var obj =req.query;
     console.log(obj)

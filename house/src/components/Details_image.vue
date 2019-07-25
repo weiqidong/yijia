@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="house-detail">
-          1居/26平米/宜住2人
+          {{item.h_layout}}/{{item.h_grade}}/{{item.Layout}}
           <a href="#"><span><b>4.9</b>分</span>/172条评论</a>
         </div>
       </li>
