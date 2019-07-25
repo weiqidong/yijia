@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 var pool = mysql.createPool({
         host: "127.0.0.1",
         user: "root",
-        password: "",
+        password: "12345678",
         port: 3306,
         database: "yijia",
         connectionLimit: 15
@@ -80,31 +80,31 @@ server.get("/reg1", (req, res) => {
     })
 })
 server.post("/reg", (req, res) => {
-    //4.1参数
-    var obj = req.body;
-    if (!obj.phone) {
-        res.send({ code: -1, msg: "用户手机号不能为空" });
-        return;
-    }
-    if (!obj.upwd) {
-        res.send({ code: -1, msg: "用户密码不能为空" });
-        return;
-    }
-    if (!obj.email) {
-        res.send({ code: -1, msg: "邮箱地址不能为空" });
-        return;
-    }
-    //4.2sql语句
-    var sql = "INSERT INTO yijia_user(phone,upwd,email) VALUES (?,?,?)";
-    //4.3json
-    pool.query(sql, [obj.phone, obj.upwd, obj.email], (err, result) => {
-        if (err) throw err;
-        if (result.affectedRows > 0) {
-            res.send({ code: 1, msg: "注册成功" });
+        //4.1参数
+        var obj = req.body;
+        if (!obj.phone) {
+            res.send({ code: -1, msg: "用户手机号不能为空" });
+            return;
         }
+        if (!obj.upwd) {
+            res.send({ code: -1, msg: "用户密码不能为空" });
+            return;
+        }
+        if (!obj.email) {
+            res.send({ code: -1, msg: "邮箱地址不能为空" });
+            return;
+        }
+        //4.2sql语句
+        var sql = "INSERT INTO yijia_user(phone,upwd,email) VALUES (?,?,?)";
+        //4.3json
+        pool.query(sql, [obj.phone, obj.upwd, obj.email], (err, result) => {
+            if (err) throw err;
+            if (result.affectedRows > 0) {
+                res.send({ code: 1, msg: "注册成功" });
+            }
+        })
     })
-})
-//5.删除用户功能
+    //5.删除用户功能
 server.get('/delete', (req, res) => {
     //5.1参数
     var obj = req.query;
@@ -153,18 +153,6 @@ server.get('/pri_nav', (req, res) => {
 })
 
 // 8.查询城市列表
-server.get('/city', (req, res) => {
-    // 8.1参数
-    var obj = req.query;
-    // 8.2执行sql语句
-    var sql = "SELECT * FROM city";
-    // 8.3 json
-    pool.query(sql, [obj], (err, result) => {
-        if (err) throw err;
-        console.log(result);
-        res.send({ code: 1, data: result });
-    })
-})
 server.get('/regs', (req, res) => {
     var sql = "SELECT * FROM facility_service";
     pool.query(sql, (err, result) => {
@@ -174,11 +162,9 @@ server.get('/regs', (req, res) => {
 })
 server.get('/abs', (req, res) => {
     var obj = req.query;
-    console.log(obj)
     var sql = "SELECT cid FROM city WHERE cname=?";
     pool.query(sql, [obj.cname], (err, result) => {
         if (err) throw err;
-        console.log(result)
         res.send({ code: 1, data: result })
     })
 })
@@ -196,25 +182,15 @@ server.get("/product", (req, res) => {
     })
 })
 */
-server.get('/abs', (req, res) => {
+
+
+
+server.get("/details", (req, res) => {
     var obj = req.query;
-    console.log(obj)
-    var sql = "SELECT cid FROM city WHERE cname=?";
-    pool.query(sql, [obj.cname], (err, result) => {
+    var sql = "SELECT hid FROM yijia_house ";
+    pool.query(sql, [obj], (err, result) => {
         if (err) throw err;
-        console.log(result)
         res.send({ code: 1, data: result })
-    })
-})
-
-
-server.get("/details",(req,res)=>{
-    var obj=req.query;
-    var sql="SELECT hid FROM yijia_house ";
-    pool.query(sql,[obj],(err,result)=>{
-        if(err) throw err;
-        console.log(result);
-        res.send({code:1,data:result})
     })
 })
 
@@ -223,16 +199,16 @@ server.get("/product", (req, res) => {
     // 9.1:参数
     var pno = req.query.pno;
     var ps = req.query.pageSize;
-    var t=req.query.cid;
+    var t = req.query.cid;
     // 9.2：设置默认值
     if (!pno) { pno = 1 };
     if (!ps) { ps = 9 };
     // 9.3：创建两条sql语句执行，嵌套完成
     var obj = { code: 1, msg: "查询成功" }
-    var sql="SELECT title,hic,price,addr_detail,hid FROM yijia_house WHERE cid=? LIMIT ?,?"
+    var sql = "SELECT title,hic,price,addr_detail,hid FROM yijia_house WHERE cid=? LIMIT ?,?"
     var offset = (pno - 1) * ps;
     ps = parseInt(ps);
-    pool.query(sql, [t,offset,ps], (err, result) => {
+    pool.query(sql, [t, offset, ps], (err, result) => {
             if (err) throw err;
             obj.data = result;
             var sql = "SELECT count(*) AS c FROM yijia_house ";
@@ -241,22 +217,28 @@ server.get("/product", (req, res) => {
                 var pc = Math.ceil(result[0].c / ps);
                 obj.pc = pc;
                 res.send(obj)
-                console.log(obj)
             })
         })
         // 9.4：返回值
         // {code:1,msg:"查询成功",data[],pageCount:11}
 })
-server.get("/del",(req,res)=>{
-    var obj =req.query;
-    console.log(obj)
-    var sql="SELECT title,hname,detail,addr_detail,price,hic FROM yijia_house WHERE hid=?"
-    pool.query(sql,[obj.hid],(err,result)=>{
-        if(err) throw err;
-        res.send({code:1,data:result})
+server.get("/del", (req, res) => {
+        var obj = req.query;
+        console.log(obj)
+        var sql = "SELECT title,hname,detail,addr_detail,price,hic FROM yijia_house WHERE hid=?"
+        pool.query(sql, [obj.hid], (err, result) => {
+            if (err) throw err;
+            res.send({ code: 1, data: result })
+        })
+    })
+    // 查询所有城市
+server.get("/city", (req, res) => {
+    var sql = "SELECT cname FROM city";
+    pool.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send({ code: 1, data: result })
     })
 })
-
 
 
 
