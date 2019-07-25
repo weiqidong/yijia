@@ -297,6 +297,23 @@ server.get("/cart", (req, res) => {
         res.send({ code: 1, data: result })
     })
 })
+/*
+//7.查询指定用户购物车列表
+server.get("/cart", (req, res) => {
+    //7.1:参数(无参数)
+    var uid = req.session.uid;
+    if (!uid) {
+        res.send({ code: -1, msg: "请登录" });
+        return;
+    }
+    //7.2:sql
+    var sql = "SELECT id,img_url,title,price,count FROM xz_cart WHERE uid = ?";
+    //7.3:json
+    pool.query(sql, [uid], (err, result) => {
+        if (err) throw err;
+        res.send({ code: 1, data: result })
+    })
+})
 
 
 //8.删除购物车中商品
