@@ -1,5 +1,6 @@
 <template>
   <div class="search">
+<<<<<<< HEAD
     <ul class="search-ul">
       <li class="lis"><el-autocomplete
       class="inline-input"
@@ -8,6 +9,10 @@
       placeholder="请输入内容"
       @focus="handleSelect"
     ></el-autocomplete></li>
+=======
+    <ul>
+      <li class="lis"><el-input v-model="input" placeholder="目的地/景点/关键词"></el-input></li>
+>>>>>>> 61d9b6cf3e41cb7f48ccacde237d57e5a10910ef
       <li class="lis"><el-date-picker
       v-model="value7"
       type="daterange"
@@ -31,7 +36,7 @@
       <el-option label="9人" value="10"></el-option>
       <el-option label="10人+" value="11"></el-option>
     </el-select></li>
-      <li class="lis"><el-button type="primary" @click="search">搜索</el-button></li>
+      <li class="lis"><el-button type="warning" @click="search">搜索</el-button></li>
     </ul>
   </div>
 </template>
@@ -117,7 +122,10 @@ export default {
   position: absolute;
   margin-left: 25%;
   margin-top: 250px;
+<<<<<<< HEAD
   width:920px;
+=======
+>>>>>>> 61d9b6cf3e41cb7f48ccacde237d57e5a10910ef
 }
 .lis{
   list-style: none;
@@ -128,8 +136,6 @@ a{
   width: 60px;
   height: 38px;
   background-color: #3385ff;
-}
-.search_ul{
-  margin:0 auto;
+  
 }
 </style>

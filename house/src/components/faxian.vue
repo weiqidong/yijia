@@ -4,15 +4,15 @@
     <div class="faxian">
         <div class="nav">
             <img src="faxian/remen.jpg" alt="">
-            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                <el-menu-item index="1">北京</el-menu-item>
-                <el-menu-item index="2">上海</el-menu-item>
-                <el-menu-item index="3">广州</el-menu-item>
+            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
+                <el-menu-item index="1" @click="gobj()" v-for="(item,i) of arr" :key="i">{{item.cname}}</el-menu-item>
+                <!-- <el-menu-item index="2" @click="gosh()">上海</el-menu-item>
+                <el-menu-item index="3" @click="gogz()">广州</el-menu-item>
                 <el-menu-item index="4">深圳</el-menu-item>
                 <el-menu-item index="5">成都</el-menu-item>
                 <el-menu-item index="6">西安</el-menu-item>
-                <el-menu-item index="7">杭州</el-menu-item>
-                <el-menu-item index="8"><a href="https://www.ele.me" target="_blank">更多</a></el-menu-item>
+                <el-menu-item index="7">杭州</el-menu-item> -->
+                <el-menu-item index="8" id="bj"><a href="https://www.ele.me" target="_blank">更多</a></el-menu-item>
             </el-menu>
         </div>
         <div class="city">
@@ -25,7 +25,6 @@
                         <h4>自由空间-古北水镇地中海叠拼别墅</h4>
                         <p>房间在古北水镇景区200米范围内，走路5分钟即可到达古北水镇景区门口。小区私密性好，安保健全。房间为Loft户型，楼下为休闲空间，楼上两个卧室，主卧带独立卫生间，公寓配套私人花园。私密性极好。专业设计师设计，地中海风情，装修精美。<a href="#">详情</a></p>
                     </div>
-                    
                 </div>
                 <div class="item item-2 dh">
                      <img src="faxian/a5.jpg" alt="">
@@ -38,20 +37,19 @@
                     <img src="faxian/a2.jpg" alt="">
                     <div class="mask">
                         <img class="xin" src="faxian/xin.svg" alt="">
-                    <h3>¥ 1999.00</h3>
+                        <h3>¥ 1999.00</h3>
                     </div>
                 </div>
                 <div class="item item-4">
-                    <div class="item-bj">
+                    <div class="item-bj" id="sh">
                         <h4>自由空间-古北水镇地中海叠拼别墅</h4>
                         <p>房间在古北水镇景区200米范围内，走路5分钟即可到达古北水镇景区门口。小区私密性好，安保健全。房间为Loft户型，楼下为休闲空间，楼上两个卧室，主卧带独立卫生间，公寓配套私人花园。私密性极好。专业设计师设计，地中海风情，装修精美。<a href="#">详情</a></p>
                     </div>
-                    
                 </div>
             </div>
             <el-button class="btn-bj" type="info" plain>更多美房</el-button>
         </div>
-        <div class="city">
+        <div class="city" id="gz">
             <h1>上海</h1>
             <!-- <p>摩天大楼、石库门、老洋房在这座摩登之都中交融与辉映，演绎着过去与未来的华丽篇章。大陆第一家迪士尼和惊险刺激的欢乐谷是你尽情享乐的好地方。</p>
             <p>大陆第一家迪士尼和惊险刺激的欢乐谷是你尽情享乐的好地方。 -->
@@ -102,9 +100,9 @@
                 <div class="item item-1 dh">
                     <img src="faxian/a1.jpg" alt="">
                     <div class="mask-gz">
-                            <img class="xin" src="faxian/xin.svg" alt="">
-                            <h3>¥ 2599.00</h3>
-                        </div>   
+                        <img class="xin" src="faxian/xin.svg" alt="">
+                        <h3>¥ 2599.00</h3>
+                    </div>   
                 </div>
                 <div class="item item-2">
                     <div class="item-gz">
@@ -114,9 +112,9 @@
                 <div class="item item-3 dh">
                     <img src="faxian/a3.jpg" alt="">
                     <div class="mask-gz">
-                            <img class="xin" src="faxian/xin.svg" alt="">
-                            <h3>¥ 2599.00</h3>
-                        </div>   
+                        <img class="xin" src="faxian/xin.svg" alt="">
+                        <h3>¥ 2599.00</h3>
+                    </div>   
                 </div>
                 <div class="item item-4">
                     <div class="item-gz">
@@ -131,9 +129,9 @@
                 <div class="item item-6 dh">
                     <img src="faxian/a4.jpg" alt="">
                     <div class="mask-gz">
-                            <img class="xin" src="faxian/xin.svg" alt="">
-                            <h3>¥ 2599.00</h3>
-                        </div>   
+                        <img class="xin" src="faxian/xin.svg" alt="">
+                        <h3>¥ 2599.00</h3>
+                    </div>   
                 </div>
                 <div class="item item-7">
                     <div class="item-gz">
@@ -143,9 +141,9 @@
                 <div class="item item-8 dh">
                     <img src="faxian/a8.jpg" alt="">
                     <div class="mask-gz">
-                            <img class="xin" src="faxian/xin.svg" alt="">
-                            <h3>¥ 2599.00</h3>
-                        </div>   
+                        <img class="xin" src="faxian/xin.svg" alt="">
+                        <h3>¥ 2599.00</h3>
+                    </div>   
                 </div>
                 <el-button class="btn-gz" type="info" plain>更多美房</el-button>
             </div>
@@ -166,7 +164,8 @@ export default {
     data(){
         return{
              activeIndex: '1',
-             activeIndex2: '1'
+             activeIndex2: '1',
+             arr:[]
         }
     },
     components:{
@@ -174,13 +173,34 @@ export default {
         "Hflooter":Hflooter,
     },
   methods: {
-       handleSelect(key, keyPath) {
-       console.log(key, keyPath);
-      }
-     }
+       gobj:function(){
+      document.querySelector("#bj").scrollIntoView(true);
+    },
+    gosh:function(){
+      document.querySelector("#sh").scrollIntoView(true);
+    },
+    gogz:function(){
+      document.querySelector("#gz").scrollIntoView(true);
+    },
+    style(){
+        document.querySelector("index='1'")
+    }
+     },
+    created(){
+        var url="/yijia_house";
+        this.axios.get(url).then(result=>{
+           console.log(result.data.data);
+           this.arr=result.data.data;
+           console.log(this.arr);
+        })
+    }
 }
+
 </script>
 <style>
+.nav img{
+    margin-left: 60px;
+}
 .faxian{
   padding-top: 80px;
   padding-bottom: 50px;
@@ -266,8 +286,6 @@ export default {
     from{left:-550px;}
     to{left:0px;}
 }
-
-
     .item-gz{width: 175px;}
   .sh{
         align-items: center;
@@ -288,7 +306,7 @@ export default {
     h1{
         margin-bottom: 30px;
         text-align: center;
-    }
+        }
     .container-gz{
         position: relative;
     }
@@ -346,6 +364,7 @@ export default {
         font-size: 20px !important;
         margin-left: 70px !important;
         color: #000 !important;
+        border-bottom: solid 1px #ffffff !important;
    }
    .el-menu-item:hover{
        color:#fb6720 !important;
