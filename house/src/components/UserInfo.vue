@@ -93,6 +93,44 @@
                                     @change="handleChange">
                                 </el-cascader>
                             </el-form-item>
+                            <el-form-item label="性别：">
+                                <el-radio-group v-model="radio">
+                                    <el-radio :label="1">男</el-radio>
+                                    <el-radio :label="0">女</el-radio>
+                                </el-radio-group>
+                            </el-form-item>
+                            <el-form-item label="出生日期：">
+                                <el-date-picker
+                                    v-model="birthday"
+                                    type="date"
+                                    placeholder="选择日期">
+                                </el-date-picker>
+                            </el-form-item>
+                            <el-form-item label="所在城市：">
+                                <el-cascader
+                                    expand-trigger="hover"
+                                    :options="options"
+                                    v-model="selectedOptions" 
+                                    @change="handleChange1">
+                                </el-cascader>
+                            </el-form-item>
+                            <el-form-item label="兴趣爱好：">
+                                <el-button round v-for="(item,i) of checkedHobbies" :key="i">{{item}}<i class="el-icon-close"></i></el-button>
+                                <el-button type="text" @click="dialogFormVisible = true">添加</el-button>
+                                    <el-dialog title="添加兴趣爱好" :visible.sync="dialogFormVisible">
+                                    <el-form :model="form">
+                                        <el-checkbox-group 
+                                            v-model="checkedHobbies"
+                                            :max="10">
+                                            <el-checkbox v-for="(item,i) of hobbies" :label="item" :key="i">{{item}}</el-checkbox>
+                                        </el-checkbox-group>
+                                    </el-form>
+                                    <div slot="footer" class="dialog-footer">
+                                        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                                    </div>
+                                    </el-dialog>
+                                <span></span>
+                            </el-form-item>
                         </el-form>
                     </el-main>
                 </el-container>
@@ -103,6 +141,10 @@
     export default {
         data(){
             return {
+                hobbies:['跑步','足球','篮球','游泳','登山','羽毛球','钓鱼','品茶','书法','乐器','养花','看书','摄影','旅游','烘焙','唱歌','电影','美食','绘画','宠物'],
+                checkedHobbies:[],
+                birthday:'',
+                radio:1,
                 uname:"未填",
                 email:"1139755334@qq.com",
                 phone:"15621875194",
@@ -114,11 +156,16 @@
                     label: '北京',
                     children: [{value:'朝阳区',label:'朝阳区'},]
                     }],
-                selectedOptions2: []
+                selectedOptions2: [],
+                selectedOptions: [],
+                dialogFormVisible: false,
             }
         },
         methods: {
             handleChange(value) {
+                console.log(value);
+            },
+            handleChange1(value) {
                 console.log(value);
             },
             getaddr(){
@@ -129,11 +176,14 @@
     }
     </script>
     <style>
+    .dialog-footer{
+        text-align: center;
+    }
     .el-form .el-cascader .el-input__suffix{
-        left:210px;
+        left:180px;
     }
     .el-form .el-cascader .el-input__inner{
-        width:250px;
+        width:220px;
     }
     .el-form .el-form-item__label{
         font-size: 18px;
