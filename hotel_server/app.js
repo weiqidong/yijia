@@ -239,14 +239,11 @@ server.get("/city", (req, res) => {
         res.send({ code: 1, data: result })
     })
 })
-<<<<<<< HEAD
 
 
 
 
 
-=======
->>>>>>> 61d9b6cf3e41cb7f48ccacde237d57e5a10910ef
 /*
 //7.查询指定用户购物车列表
 server.get("/cart", (req, res) => {
@@ -298,20 +295,20 @@ server.get("/delAll", (req, res) => {
     })
 });*/
 //10.查询yijia_house中的城市
-server.get("/yijia_house",(req,res)=>{
-    var sql=`SELECT cid FROM yijia_house where chara=1`;
-    pool.query(sql,(err,result)=>{
-        if(err) throw err;
-        var arr=[];
-        for(var i=0;i<result.length;i++){
+server.get("/yijia_house", (req, res) => {
+    var sql = `SELECT cid FROM yijia_house where chara=1`;
+    pool.query(sql, (err, result) => {
+        if (err) throw err;
+        var arr = [];
+        for (var i = 0; i < result.length; i++) {
             arr.push(result[i].cid);
         }
         console.log(arr);
-        var sql="SELECT cname FROM city WHERE cid IN(?)";
-        pool.query(sql,[arr],(err,result)=>{
-            if(err) throw err;
+        var sql = "SELECT cname FROM city WHERE cid IN(?)";
+        pool.query(sql, [arr], (err, result) => {
+            if (err) throw err;
             console.log(result);
-            res.send({code:1,data:result})
+            res.send({ code: 1, data: result })
         })
     })
 });
