@@ -196,42 +196,32 @@ server.get("/details", (req, res) => {
 
 // 9:商品的分页显示
 server.get("/product", (req, res) => {
-        // 9.1:参数
-        var pno = req.query.pno;
-        var ps = req.query.pageSize; <<
-        << << < HEAD
-        var t = req.query.cid; ===
-        === =
-        var t = req.query.cid;
-        console.log(t) >>>
-            >>> > 1 fa57b2dd01ddb81244f751c5d4b97056c359627
-            // 9.2：设置默认值
-        if (!pno) { pno = 1 };
-        if (!ps) { ps = 9 };
-        // 9.3：创建两条sql语句执行，嵌套完成
-        var obj = { code: 1, msg: "查询成功" } <<
-            << << < HEAD
-        var sql = "SELECT title,hic,price,addr_detail,hid FROM yijia_house WHERE cid=? LIMIT ?,?" ===
-            === =
-            var sql = "SELECT title,hic,price,addr_detail,h_layout,h_grade,Layout,hid FROM yijia_house WHERE cid=? LIMIT ?,?" >>>
-                >>> > 1 fa57b2dd01ddb81244f751c5d4b97056c359627
-        var offset = (pno - 1) * ps;
-        ps = parseInt(ps);
-        pool.query(sql, [t, offset, ps], (err, result) => {
+    // 9.1:参数
+    var pno = req.query.pno;
+    var ps = req.query.pageSize;
+    var t = req.query.cid;
+    // 9.2：设置默认值
+    if (!pno) { pno = 1 };
+    if (!ps) { ps = 9 };
+    // 9.3：创建两条sql语句执行，嵌套完成
+    var obj = { code: 1, msg: "查询成功" }
+    var sql = "SELECT title,hic,price,addr_detail,hid FROM yijia_house WHERE cid=? LIMIT ?,?"
+    var offset = (pno - 1) * ps;
+    ps = parseInt(ps);
+    pool.query(sql, [t, offset, ps], (err, result) => {
+            if (err) throw err;
+            obj.data = result;
+            var sql = "SELECT count(*) AS c FROM yijia_house ";
+            pool.query(sql, (err, result) => {
                 if (err) throw err;
-                obj.data = result;
-                var sql = "SELECT count(*) AS c FROM yijia_house ";
-                pool.query(sql, (err, result) => {
-                    if (err) throw err;
-                    var pc = Math.ceil(result[0].c / ps);
-                    obj.pc = pc;
-                    res.send(obj)
-                })
+                var pc = Math.ceil(result[0].c / ps);
+                obj.pc = pc;
+                res.send(obj)
             })
-            // 9.4：返回值
-            // {code:1,msg:"查询成功",data[],pageCount:11}
-    }) <<
-    << << < HEAD
+        })
+        // 9.4：返回值
+        // {code:1,msg:"查询成功",data[],pageCount:11}
+})
 server.get("/del", (req, res) => {
         var obj = req.query;
         console.log(obj)
@@ -243,128 +233,68 @@ server.get("/del", (req, res) => {
     })
     // 查询所有城市
 server.get("/city", (req, res) => {
-            var sql = "SELECT cname FROM city";
-            pool.query(sql, (err, result) => {
-                        if (err) throw err;
-                        res.send({ code: 1, data: result }) ===
-                            === =
-
-
-
-                            // 10:查询房屋级别的信息  h_grade
-                            server.get("/house_rank", (req, res) => {
-                                var rank = req.query;
-                                //var n=req.query.cid;
-                                var sql = "SELECT h_grade FROM yijia_house?"
-                                pool.query(sql, [rank], (err, result) => {
-                                    if (err) throw err;
-                                    res.send({ code: 1, data: result })
-                                })
-                            })
-
-
-                        server.get("/del", (req, res) => {
-                            var obj = req.query;
-                            console.log(obj)
-                            var sql = "SELECT title,hname,detail,addr_detail,price,hic FROM yijia_house WHERE hid=?"
-                            pool.query(sql, [obj.hid], (err, result) => {
-                                if (err) throw err;
-                                res.send({ code: 1, data: result }) >>>
-                                    >>> > 1 fa57b2dd01ddb81244f751c5d4b97056c359627
-                            })
-                        })
+    var sql = "SELECT initial, cname FROM city";
+    pool.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send({ code: 1, data: result })
+    })
+})
 
 
 
 
 
-                        /*
-                        //7.查询指定用户购物车列表
-                        server.get("/cart", (req, res) => {
-                            //7.1:参数(无参数)
-                            var uid = req.session.uid;
-                            if (!uid) {
-                                res.send({ code: -1, msg: "请登录" });
-                                return;
-                            }
-                            //7.2:sql
-                            var sql = "SELECT id,img_url,title,price,count FROM xz_cart WHERE uid = ?";
-                            //7.3:json
-                            pool.query(sql, [uid], (err, result) => {
-                                if (err) throw err;
-                                res.send({ code: 1, data: result })
-                            })
-                        })
-                        <<<<<<< HEAD
-                        =======
-                        /*
-                        //7.查询指定用户购物车列表
-                        server.get("/cart", (req, res) => {
-                            //7.1:参数(无参数)
-                            var uid = req.session.uid;
-                            if (!uid) {
-                                res.send({ code: -1, msg: "请登录" });
-                                return;
-                            }
-                            //7.2:sql
-                            var sql = "SELECT id,img_url,title,price,count FROM xz_cart WHERE uid = ?";
-                            //7.3:json
-                            pool.query(sql, [uid], (err, result) => {
-                                if (err) throw err;
-                                res.send({ code: 1, data: result })
-                            })
-                        })
+/*
+//7.查询指定用户购物车列表
+server.get("/cart", (req, res) => {
+    //7.1:参数(无参数)
+    var uid = req.session.uid;
+    if (!uid) {
+        res.send({ code: -1, msg: "请登录" });
+        return;
+    }
+    //7.2:sql
+    var sql = "SELECT id,img_url,title,price,count FROM xz_cart WHERE uid = ?";
+    //7.3:json
+    pool.query(sql, [uid], (err, result) => {
+        if (err) throw err;
+        res.send({ code: 1, data: result })
+    })
+})
 
 
-                        >>>>>>> 1fa57b2dd01ddb81244f751c5d4b97056c359627
-                        //8.删除购物车中商品
-                        server.get("/delItem", (req, res) => {
-                            //8.1.参数 购物车id
-                            var id = req.query.id;
-                            //8.2.sql 删除指定数据
-                            var sql = "DELETE FROM xz_cart WHERE id=?"
-                                //8.3.json
-                            pool.query(sql, [id], (err, result) => {
-                                if (err) throw err;
-                                console.log(result);
-                                if (result.affectedRows > 0) {
-                                    res.send({ code: 1, msg: "删除成功" });
-                                } else {
-                                    res.send({ code: -1, msg: "删除失败" });
-                                }
-                            })
-                        })
-                        //9.删除购物车中多个商品
-                        server.get("/delAll", (req, res) => {
-                            //9.1参数
-                            var ids = req.query.ids;
-                            //9.2 sql语句
-                            var sql = `DELETE FROM xz_cart WHERE id IN (${ids})`;
-                            //9.3:json
-                            pool.query(sql, (err, result) => {
-                                if (err) throw err;
-                                if (result.affectedRows > 0) {
-                                    res.send({ code: 1, msg: "删除成功" });
-                                } else {
-                                    res.send({ code: -1, msg: "删除失败" });
-                                }
-                            })
-                        });*/
-                        //10.查询yijia_house中的城市
-                        server.get("/yijia_house", (req, res) => {
-                            var sql = `SELECT cid FROM yijia_house where chara=1`;
-                            pool.query(sql, (err, result) => {
-                                if (err) throw err;
-                                var arr = [];
-                                for (var i = 0; i < result.length; i++) {
-                                    arr.push(result[i].cid);
-                                }
-                                console.log(arr);
-                                var sql = "SELECT cname FROM city WHERE cid IN(?)";
-                                pool.query(sql, [arr], (err, result) => {
-                                    if (err) throw err;
-                                    console.log(result);
-                                    res.send({ code: 1, data: result })
-                                })
-                            })
-                        });
+//8.删除购物车中商品
+server.get("/delItem", (req, res) => {
+    //8.1.参数 购物车id
+    var id = req.query.id;
+    //8.2.sql 删除指定数据
+    var sql = "DELETE FROM xz_cart WHERE id=?"
+        //8.3.json
+    pool.query(sql, [id], (err, result) => {
+        if (err) throw err;
+        console.log(result);
+        if (result.affectedRows > 0) {
+            res.send({ code: 1, msg: "删除成功" });
+        } else {
+            res.send({ code: -1, msg: "删除失败" });
+        }
+    })
+})
+
+
+//9.删除购物车中多个商品
+server.get("/delAll", (req, res) => {
+    //9.1参数
+    var ids = req.query.ids;
+    //9.2 sql语句
+    var sql = `DELETE FROM xz_cart WHERE id IN (${ids})`;
+    //9.3:json
+    pool.query(sql, (err, result) => {
+        if (err) throw err;
+        if (result.affectedRows > 0) {
+            res.send({ code: 1, msg: "删除成功" });
+        } else {
+            res.send({ code: -1, msg: "删除失败" });
+        }
+    })
+});*/

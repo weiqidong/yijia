@@ -118,10 +118,6 @@ export default {
   margin-left: 25%;
   margin-top: 250px;
   width:920px;
-<<<<<<< HEAD
-=======
-  background-color:#b1c7d6;
->>>>>>> 1fa57b2dd01ddb81244f751c5d4b97056c359627
 }
 .lis{
   list-style: none;
