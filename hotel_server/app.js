@@ -233,7 +233,7 @@ server.get("/del", (req, res) => {
     })
     // 查询所有城市
 server.get("/city", (req, res) => {
-    var sql = "SELECT cname FROM city";
+    var sql = "SELECT initial, cname FROM city";
     pool.query(sql, (err, result) => {
         if (err) throw err;
         res.send({ code: 1, data: result })

@@ -40,9 +40,11 @@
 export default {
   data(){
     return {
+      cname:sessionStorage.getItem("value7"),
+      cname:sessionStorage.getItem("cname"),
       select:"",
-      value:"",
-      value1:""
+      value:"cname",
+      value1:"value7"
     }
   }
 }

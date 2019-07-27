@@ -98,9 +98,7 @@ export default {
   },
   mounted(){
     one:{
-      console.log(this.value7)
       var obj={hid:this.hid}
-      console.log(obj)
       this.axios.get("/del",{params:obj}).then(res=>{
         this.lista=res.data.data
         

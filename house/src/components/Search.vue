@@ -5,7 +5,7 @@
       class="inline-input"
       v-model="state1"
       :fetch-suggestions="querySearch"
-      placeholder="请输入内容"
+      placeholder="请输入目的地"
       @focus="handleSelect"
     ></el-autocomplete></li>
       <li class="lis"><el-date-picker
@@ -70,7 +70,8 @@ export default {
           }]
         },
         value7: '' ,
-        citys:[]   
+        citys:[] ,
+        str:[]  
     }
   },
   methods:{
@@ -83,25 +84,27 @@ export default {
     search(){
       var cname=this.state1;
       var obj={cname:cname}
+      var value7=this.value7
       console.log((this.value7[1]-this.value7[0])/1000/3600/24)
       this.axios.get("/abs",{params:obj}).then(res=>{
         var cid=res.data.data[0].cid;
-        console.log(cid)
-        console.log(cname)
         sessionStorage.setItem("cid",cid);
-        sessionStorage.setItem("cname",cname)
+        sessionStorage.setItem("cname",cname);
+        sessionStorage.setItem("value7",value7)
        this.$router.push("/details")
       })
     },
     handleSelect(item) {
        this.axios.get('/city').then(res=>{
-         citys=res.data.data
+         this.citys=res.data.data
+         for(var i=0;i<this.citys.length;i++){
+           this.str.push({"value":this.citys[i].cname})
+         }
        })
+       
       },
      loadAll() {
-        return [
-          {"value":item}
-        ];
+        return this.str
         
       },
   },
@@ -132,4 +135,6 @@ a{
 .search_ul{
   margin:0 auto;
 }
+
+
 </style>
