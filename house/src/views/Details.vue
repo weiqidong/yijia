@@ -51,7 +51,10 @@ export default {
     "navtop":navtop,
     "hflooter":Hflooter,
   },
- 
+  created() {
+    console.log(this.cid)
+    console.log(this.cname)
+  },
 }
 </script>
 <style scoped>

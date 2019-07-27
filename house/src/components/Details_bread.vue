@@ -12,8 +12,9 @@ export default {
   data(){
     return {}
   },
-  props:["cname"],
+  props:["cname"]
 }
+
 </script>
 <style scoped>
 .breadcrumb{

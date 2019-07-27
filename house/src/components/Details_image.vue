@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="house-detail">
-          1居/26平米/宜住2人
+          {{item.h_layout}}/{{item.h_grade}}/{{item.Layout}}
           <a href="#"><span><b>4.9</b>分</span>/172条评论</a>
         </div>
       </li>
@@ -274,7 +274,7 @@ export default {
 
   methods:{
     loadMore(){//加载更多数据
-      var url="product";
+      var url="/product";
       this.pno++;
       var obj={pno:this.pno,pageSize:this.ps,cid:this.cid};
       this.axios.get(url,{params:obj}).then(result=>{
@@ -285,7 +285,7 @@ export default {
       })
     },
     loadSlow(){
-      var url="product";
+      var url="/product";
       this.pno--;
       var obj={pno:this.pno,pageSize:this.ps,cid:this.cid};
       this.axios.get(url,{params:obj}).then(result=>{
