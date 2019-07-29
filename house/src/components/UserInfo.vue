@@ -161,6 +161,31 @@
                 dialogFormVisible: false,
             }
         },
+        created(){
+            var arr=[];
+            this.axios.get("/area").then(res=>{
+                arr=res.data.data;
+                var j=0;
+                var k=0; 
+                // this.options[j].value=arr[0].cname;
+                // this.options[j].label=arr[0].cname;        
+                // for(var i=0;i<arr.length;i++){
+                //     if(this.options[j].label!=arr[i].cname){
+                //         k=0;
+                //         j++;
+                //         this.options[j].value=arr[i].cname;
+                //         this.options[j].label=arr[i].cname;
+                //         this.options[j].children[k].value=arr[i].aname;
+                //         this.options[j].children[k].label=arr[i].aname;
+                //     }else{
+                //         this.options[j].children[k].value=arr[i].aname;
+                //         this.options[j].children[k].label=arr[i].aname;
+                //          k++;
+                //     }
+                // }
+                console.log(this.options);
+            })
+        },
         methods: {
             handleChange(value) {
                 console.log(value);

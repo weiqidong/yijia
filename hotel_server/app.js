@@ -240,7 +240,14 @@ server.get("/city", (req, res) => {
     })
 })
 
-
+//查询城市和地区
+server.get("/area", (req, res) => {
+    var sql = "SELECT cname,aname FROM city,area WHERE city.cid=area.cid";
+    pool.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send({ code: 1, data: result });
+    })
+})
 
 
 
