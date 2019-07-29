@@ -4,7 +4,7 @@ import router from './router'
 import axios from './axios.js';
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
-// import rz from './rz'
+
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

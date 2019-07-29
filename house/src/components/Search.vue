@@ -84,13 +84,14 @@ export default {
     search(){
       var cname=this.state1;
       var obj={cname:cname}
-      var value7=this.value7
-      console.log((this.value7[1]-this.value7[0])/1000/3600/24)
+      var times=new Date(this.value7[1]) 
+      var timee=new Date(this.value7[0]) 
       this.axios.get("/abs",{params:obj}).then(res=>{
         var cid=res.data.data[0].cid;
         sessionStorage.setItem("cid",cid);
         sessionStorage.setItem("cname",cname);
-        sessionStorage.setItem("value7",value7)
+        sessionStorage.setItem("value7",times)
+        sessionStorage.setItem("value3",timee)
        this.$router.push("/details")
       })
     },

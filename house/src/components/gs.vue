@@ -81,6 +81,7 @@ export default {
 </script>
 <style>
 .el-pagination{
+    text-align: center !important;
     margin-top: 20px !important;
     margin-bottom: 20px !important;
 }

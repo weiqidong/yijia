@@ -50,8 +50,7 @@ export default {
     "details-input":Details_input,
     "navtop":navtop,
     "hflooter":Hflooter,
-  },
- 
+  }, 
 }
 </script>
 <style scoped>
