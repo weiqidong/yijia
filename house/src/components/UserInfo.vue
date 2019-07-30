@@ -94,7 +94,7 @@
                                 </el-cascader>
                             </el-form-item>
                             <el-form-item label="性别：">
-                                <el-radio-group v-model="radio">
+                                <el-radio-group v-model="sex">
                                     <el-radio :label="1">男</el-radio>
                                     <el-radio :label="0">女</el-radio>
                                 </el-radio-group>
@@ -118,16 +118,16 @@
                                 <el-button round v-for="(item,i) of checkedHobbies" :key="i">{{item}}<i class="el-icon-close"></i></el-button>
                                 <el-button type="text" @click="dialogFormVisible = true">添加</el-button>
                                     <el-dialog title="添加兴趣爱好" :visible.sync="dialogFormVisible">
-                                    <el-form :model="form">
-                                        <el-checkbox-group 
-                                            v-model="checkedHobbies"
-                                            :max="10">
-                                            <el-checkbox v-for="(item,i) of hobbies" :label="item" :key="i">{{item}}</el-checkbox>
-                                        </el-checkbox-group>
-                                    </el-form>
-                                    <div slot="footer" class="dialog-footer">
-                                        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                                    </div>
+                                        <el-form :model="form">
+                                            <el-checkbox-group 
+                                                v-model="checkedHobbies"
+                                                :max="10">
+                                                <el-checkbox v-for="(item,i) of hobbies" :label="item" :key="i">{{item}}</el-checkbox>
+                                            </el-checkbox-group>
+                                        </el-form>
+                                        <div slot="footer" class="dialog-footer">
+                                            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                                        </div>
                                     </el-dialog>
                                 <span></span>
                             </el-form-item>
@@ -144,7 +144,7 @@
                 hobbies:['跑步','足球','篮球','游泳','登山','羽毛球','钓鱼','品茶','书法','乐器','养花','看书','摄影','旅游','烘焙','唱歌','电影','美食','绘画','宠物'],
                 checkedHobbies:[],
                 birthday:'',
-                radio:1,
+                sex:"",
                 uname:"未填",
                 email:"1139755334@qq.com",
                 phone:"15621875194",
@@ -161,6 +161,31 @@
                 dialogFormVisible: false,
             }
         },
+        created(){
+            var arr=[];
+            this.axios.get("/area").then(res=>{
+                arr=res.data.data;
+                var j=0;
+                var k=0; 
+                // this.options[j].value=arr[0].cname;
+                // this.options[j].label=arr[0].cname;        
+                // for(var i=0;i<arr.length;i++){
+                //     if(this.options[j].label!=arr[i].cname){
+                //         k=0;
+                //         j++;
+                //         this.options[j].value=arr[i].cname;
+                //         this.options[j].label=arr[i].cname;
+                //         this.options[j].children[k].value=arr[i].aname;
+                //         this.options[j].children[k].label=arr[i].aname;
+                //     }else{
+                //         this.options[j].children[k].value=arr[i].aname;
+                //         this.options[j].children[k].label=arr[i].aname;
+                //          k++;
+                //     }
+                // }
+                console.log(this.options);
+            })
+        },
         methods: {
             handleChange(value) {
                 console.log(value);
@@ -176,6 +201,9 @@
     }
     </script>
     <style>
+    .el-container{
+        justify-content: center;
+    }
     .dialog-footer{
         text-align: center;
     }
@@ -224,7 +252,7 @@
         margin-right: 0px;
     }
     #center{
-        width:1500px;
+        width:1000px;
         margin:0 auto;
     }
     #img{
