@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 var pool = mysql.createPool({
         host: "127.0.0.1",
         user: "root",
-        password: "",
+        password: "12345678",
         port: 3306,
         database: "yijia",
         connectionLimit: 15
@@ -147,7 +147,6 @@ server.get('/pri_nav', (req, res) => {
     // 7.3 json 
     pool.query(sql, [obj], (err, result) => {
         if (err) throw err;
-        console.log(result);
         res.send({ code: 1, data: result });
     })
 })
@@ -224,7 +223,6 @@ server.get("/product", (req, res) => {
 })
 server.get("/del", (req, res) => {
         var obj = req.query;
-        console.log(obj)
         var sql = "SELECT title,hname,detail,addr_detail,price,hic FROM yijia_house WHERE hid=?"
         pool.query(sql, [obj.hid], (err, result) => {
             if (err) throw err;

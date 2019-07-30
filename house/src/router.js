@@ -18,6 +18,7 @@ import Search from './components/Search.vue'
 import Details from './views/Details.vue'
 import Detail from './views/Detail.vue'
 import UserInfo from './components/UserInfo.vue'
+import Booking from './views/booking.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -120,5 +121,6 @@ export default new Router({
 
             component: Detail
         },
+        { path: '/booking', component: Booking }
     ]
 })

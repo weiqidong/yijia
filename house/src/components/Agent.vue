@@ -259,7 +259,8 @@ export default {
  }
  li{
    list-style:none;
-    float: left;   
+    float: left;  
+    width: 150px; 
  }
  .add>li{
    margin-right: 5%;
@@ -275,7 +276,5 @@ export default {
    padding-right: 10px;
    padding-top: 10px;
  }
- .serve span{
-   padding-right: 100px;
- }
+
 </style>

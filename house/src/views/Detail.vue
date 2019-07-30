@@ -2,10 +2,7 @@
   <div class="bgs">
     <navtop></navtop> 
     <div>
-      <div>
-      <img :src="'http://127.0.0.1:3000/'+lista[0].hic" alt="">
-    </div>
-      <div>
+      <div class="bread" :style="{background:'url(http://127.0.0.1:3000/'+lista[0].hic +')'}">
         <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>{{cname}}</el-breadcrumb-item>
@@ -39,7 +36,7 @@
     </el-date-picker>
       </div> 
       <div>
-        <el-button class="nva" type="primary" @click="onre">立即订购</el-button>
+        <el-button class="nva" type="primary" @click="onre">立即订购{{days}}晚¥{{days*lista[0].price}}</el-button>
       </div> 
     </div>
     <hflooter></hflooter>
@@ -56,6 +53,7 @@ import navtop from "../components/navtop"
 export default {
   data(){
     return{
+      days: '',
       lista:[],
       activeName: 'second',
        pickerOptions2: {
@@ -85,7 +83,7 @@ export default {
             }
           }]
         },
-        value7: '',
+        value7:[new Date(sessionStorage.getItem("value3")),new Date(sessionStorage.getItem("value7"))],
         lists:[],
         hid:sessionStorage.getItem("hid"),
       cname:sessionStorage.getItem("cname")
@@ -98,6 +96,7 @@ export default {
   },
   mounted(){
     one:{
+      this.days=(this.value7[1]-this.value7[0])/1000/3600/24;
       var obj={hid:this.hid}
       this.axios.get("/del",{params:obj}).then(res=>{
         this.lista=res.data.data
@@ -105,7 +104,11 @@ export default {
       })
     }
   },
-
+  watch: {
+    value7:function(){
+      this.days=(this.value7[1]-this.value7[0])/1000/3600/24;
+    }
+  },
   components:{
     "agent":Agent,
     "deal":Deal,
@@ -127,7 +130,6 @@ img{
  .bread{
    padding-top: 100px;
    padding-left: 10%;
-    background: url("../reg_bg.png");
    height: 500px ;
  }
  .tabs{
@@ -158,6 +160,6 @@ span{
  .nva{
    width:350px;
    text-align: center;
-   font-size: 25px;
+   font-size: 20px;
  }
 </style>
