@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 var pool = mysql.createPool({
         host: "127.0.0.1",
         user: "root",
-        password: "12345678",
+        password: "",
         port: 3306,
         database: "yijia",
         connectionLimit: 15
@@ -247,7 +247,15 @@ server.get("/area", (req, res) => {
     })
 })
 
-
+//查询用户详细信息放入个人中心
+server.post('/userinfo', (req, res) => {
+    var obj = req.body;
+    var sql = "SELECT * FROM yijia_user WHERE phone=?";
+    pool.query(sql, [obj.phone], (err, result) => {
+        if (err) throw err;
+        res.send({ code: 1, data: result });
+    })
+})
 
 /*
 //7.查询指定用户购物车列表

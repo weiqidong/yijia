@@ -90,6 +90,7 @@
                                     :options="options"
                                     v-model="selectedOptions2"
                                     @click="getaddr"
+                                    @mouseenter="city"
                                     @change="handleChange">
                                 </el-cascader>
                             </el-form-item>
@@ -151,42 +152,59 @@
                 form:{
                     user_name:""
                 },
-                options: [{
-                    value: '北京',
-                    label: '北京',
-                    children: [{value:'朝阳区',label:'朝阳区'},]
-                    }],
+                options: [],
                 selectedOptions2: [],
                 selectedOptions: [],
                 dialogFormVisible: false,
             }
         },
         created(){
-            var arr=[];
-            this.axios.get("/area").then(res=>{
-                arr=res.data.data;
-                var j=0;
-                var k=0; 
-                // this.options[j].value=arr[0].cname;
-                // this.options[j].label=arr[0].cname;        
-                // for(var i=0;i<arr.length;i++){
-                //     if(this.options[j].label!=arr[i].cname){
-                //         k=0;
-                //         j++;
-                //         this.options[j].value=arr[i].cname;
-                //         this.options[j].label=arr[i].cname;
-                //         this.options[j].children[k].value=arr[i].aname;
-                //         this.options[j].children[k].label=arr[i].aname;
-                //     }else{
-                //         this.options[j].children[k].value=arr[i].aname;
-                //         this.options[j].children[k].label=arr[i].aname;
-                //          k++;
-                //     }
-                // }
-                console.log(this.options);
-            })
+
+           this.load();
         },
         methods: {
+            load(){
+                    this.phone=sessionStorage.getItem('phone');
+                    let params = new URLSearchParams();
+                    params.append('phone',this.phone);
+                    this.axios.post('/userinfo',params,{headers:{'Content-Type':'application/x-www-form-urlencoded'}}).then(result=>{
+                        if(result.data.code==1){
+                            var arr=result.data.data[0];
+                            this.email=arr.email;
+                        }
+                    
+                    })
+                    
+                
+                
+            },
+            city(){
+                var arr=[];
+                this.axios.get("/area").then(res=>{
+                    if(res.data.code==1){
+                            arr=res.data.data;
+                            var obj=new Object();              
+                            for(var i=0;i<arr.length;i++){
+                                var obj1=new Object();
+                                if(obj.value!=arr[i].cname){
+                                    this.options.push(obj);
+                                    var obj=new Object();
+                                    obj.children=[];
+                                    obj.value=obj.label=arr[i].cname;
+                                    obj1.label=obj1.value=arr[i].aname;
+                                    obj.children.push(obj1);
+                                }else{
+                                    obj1.label=obj1.value=arr[i].aname;
+                                    obj.children.push(obj1);
+                                }                
+                            }
+                            this.options.push(obj);
+                            this.options.splice(0,1);
+                            console.log(this.options);
+                    }
+                    
+                })
+            },
             handleChange(value) {
                 console.log(value);
             },
@@ -237,7 +255,7 @@
         list-style: none;
     }
     .el-main .el-card{
-        width:700px;
+        width:600px;
     }
     .inf{
         display:flex;

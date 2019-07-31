@@ -9,8 +9,8 @@
             <li class="border-b"><router-link tag="a" :to="'/gs'">故事</router-link></li>
         </ul>
         <ul class="nav-right">
-            <li class="reg"><router-link tag="a" :to="'/reg'">注册</router-link></li>
-            <li class="login" @click="logout">{{lo}}<router-link tag="a" :to="l">{{c}}</router-link></li>
+            <li class="login" @click="logout"><p>{{lo}}</p><router-link tag="a" :to="l">{{c}}</router-link></li>
+            <li class="reg" @click="goto"><router-link tag="a" :to="r">{{reg}}</router-link></li>
         </ul>
     </div>
 </template>
@@ -22,7 +22,8 @@ export default {
             lo:"",
             l:"/Login",
             c:"登录",
-            ad:false
+            reg:'注册',
+            r:'/reg'
         }
     },
     created() {
@@ -34,13 +35,19 @@ export default {
             this.lo=sessionStorage.getItem("phone")+",";
             this.c="退出";
             this.l="/";
-            this.ad=true;
+            this.r="";
+            this.reg="个人中心";
             }
         },
         logout(){
             if(this.l=="/"){
                 sessionStorage.removeItem("phone");
                 location.reload();
+            }
+        },
+        goto(){
+            if(this.r==""){
+                this.$router.push('/UserInfo');
             }
         }
     },
@@ -72,7 +79,7 @@ export default {
     font: bold;
     font-size: 20px;
     text-decoration: none;
-    display: block;
+    display: inline-block;
     width: 100px;
     margin-top: 15px;
 }
@@ -95,6 +102,9 @@ export default {
 .nav a:hover{
           color:#fb6720;
          
+}
+.login p{
+    display: inline;
 }
 
 </style>
