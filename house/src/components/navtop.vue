@@ -31,7 +31,7 @@ export default {
     },
     methods: {
         load(){
-            if(sessionStorage.length>0){
+            if(sessionStorage.getItem("phone")){
             this.lo=sessionStorage.getItem("phone")+",";
             this.c="退出";
             this.l="/";
@@ -40,7 +40,7 @@ export default {
             }
         },
         logout(){
-            if(this.l=="/"){
+            if(this.l==="/"){
                 sessionStorage.removeItem("phone");
                 location.reload();
             }

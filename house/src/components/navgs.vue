@@ -1,35 +1,55 @@
 <template>
     <div class="nav">
-        <ul class="nav-left">
+        <ul>
             <li>
-                <img src="../assets/img/logo1.png">
+                <img src="../assets/img/logo.png">
             </li>
             <li class="border-b"><router-link tag="a" :to="'/'">首页</router-link></li>
             <li class="border-b"><router-link tag="a" :to="'/faxian'">发现</router-link></li>
             <li class="border-b"><router-link tag="a" :to="'/gs'">故事</router-link></li>
         </ul>
         <ul class="nav-right">
-            <li class="reg"><router-link tag="a" :to="'/reg'">注册</router-link></li>
-            <li class="login">{{l1}}</li>
+            <li class="login" @click="logout"><p>{{lo}}</p><router-link tag="a" :to="l">{{c}}</router-link></li>
+            <li class="reg" @click="goto"><router-link tag="a" :to="r">{{reg}}</router-link></li>
         </ul>
     </div>
 </template>
 <script>
 export default {
-    name:"navgs",
+    name:"navtop",
     data(){
         return{
-            l1:""
+            lo:"",
+            l:"/Login",
+            c:"登录",
+            reg:'注册',
+            r:'/reg'
         }
     },
     created() {
-        console.log(sessionStorage.length)
-        if(sessionStorage.length>0){
-            this.l1=sessionStorage.getItem("phone")+`<router-link tag="a" :to="'/Login'">退出</router-link>`;
-        }else{
-            this.l1=`<router-link tag="a" :to="'/Login'">登录</router-link>`
+       this.load(); 
+    },
+    methods: {
+        load(){
+            if(sessionStorage.getItem("phone")){
+            this.lo=sessionStorage.getItem("phone")+",";
+            this.c="退出";
+            this.l="/";
+            this.r="";
+            this.reg="个人中心";
+            }
+        },
+        logout(){
+            if(this.l==="/"){
+                sessionStorage.removeItem("phone");
+                location.reload();
+            }
+        },
+        goto(){
+            if(this.r==""){
+                this.$router.push('/UserInfo');
+            }
         }
-        console.log(l1);
     },
 }
 </script>

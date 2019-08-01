@@ -66,11 +66,11 @@
                                 <ul>
                                     <li>
                                         用户名：<strong>{{uname}}</strong>
-                                        <a href="javascript:;">填写</a>
+                                        <span @click="adduname">填写</span>
                                     </li>
                                     <li>
                                         邮箱：<strong>{{email}}</strong>
-                                        <a href="javascript:;">修改</a>
+                                        <span @click="updateemail">修改</span>
                                     </li>
                                     <li>
                                         绑定手机：<strong>{{phone}}</strong>
@@ -89,8 +89,7 @@
                                     expand-trigger="hover"
                                     :options="options"
                                     v-model="selectedOptions2"
-                                    @click="getaddr"
-                                    @mouseenter="city"
+                                    @click="city"
                                     @change="handleChange">
                                 </el-cascader>
                             </el-form-item>
@@ -104,7 +103,10 @@
                                 <el-date-picker
                                     v-model="birthday"
                                     type="date"
-                                    placeholder="选择日期">
+                                    placeholder="选择日期"
+                                    format="yyyy 年 MM 月 dd 日"
+                                    value-format="yyyy-MM-dd"
+                                    >
                                 </el-date-picker>
                             </el-form-item>
                             <el-form-item label="所在城市：">
@@ -112,12 +114,13 @@
                                     expand-trigger="hover"
                                     :options="options"
                                     v-model="selectedOptions" 
+                                    @click="city"
                                     @change="handleChange1">
                                 </el-cascader>
                             </el-form-item>
                             <el-form-item label="兴趣爱好：">
                                 <el-button round v-for="(item,i) of checkedHobbies" :key="i">{{item}}<i class="el-icon-close"></i></el-button>
-                                <el-button type="text" @click="dialogFormVisible = true">添加</el-button>
+                                <el-button type="text" v-if="checkedHobbies.length<10" @click="dialogFormVisible = true">添加</el-button>
                                     <el-dialog title="添加兴趣爱好" :visible.sync="dialogFormVisible">
                                         <el-form :model="form">
                                             <el-checkbox-group 
@@ -162,6 +165,7 @@
         created(){
 
            this.load();
+           this.city();
         },
         methods: {
             load(){
@@ -172,7 +176,14 @@
                         if(result.data.code==1){
                             var arr=result.data.data[0];
                             this.email=arr.email;
-                            var phone=this.phone;
+                            this.iphone=this.phone.substring(0,3)+'****'+this.phone.substring(7);
+                            if(arr.uname!=null){
+                                this.uname=arr.uname;
+                            }
+                            this.sex=arr.gender;
+                            this.birthday=arr.birthday;
+                            this.form.user_name=arr.user_name;
+
                         }
                     
                     })
@@ -207,14 +218,37 @@
                     
                 })
             },
+            adduname(){
+                this.$prompt('请输入用户名',{
+                    confirmButtonText:'确定',
+                    cancelButtonText:'取消',
+                }).then(({value})=>{
+                    this.uname=value;
+                }).catch(()=>{
+                    this.$message({
+                        message:'取消输入'
+                    })
+                })
+            },
+            updateemail(){
+                this.$prompt('请输入邮箱',{
+                    confirmButtonText:'确定',
+                    cancelButtonText:'取消',
+                    inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+                    inputErrorMessage: '邮箱格式不正确'
+                }).then(({value})=>{
+                    this.email=value;
+                }).catch(()=>{
+                    this.$message({
+                        message:'取消输入'
+                    })
+                })
+            },
             handleChange(value) {
                 console.log(value);
             },
             handleChange1(value) {
                 console.log(value);
-            },
-            getaddr(){
-                
             }
 
         },
@@ -248,10 +282,12 @@
         margin-top:20px;
         font-size: 14px;
     }
-    .inf ul li a{
-        text-decoration: none;
+    .inf ul li span{
         margin-left: 10px;
-        color:#1e72df
+        color:#1e72df;
+    }
+    .inf ul li span:hover{
+        cursor: pointer;
     }
     ul{
         list-style: none;
