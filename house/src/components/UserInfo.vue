@@ -7,7 +7,7 @@
                             <div id="img">
                             </div>
                             <ul>
-                                <li><a href="javascript:;">156****5194</a></li>
+                                <li><a href="javascript:;">{{iphone}}</a></li>
                                 <li><a href="javascript:;">修改个人资料</a></li>
                                 <li><a href="javascript:;">钻石卡绑定</a></li>
                             </ul>
@@ -152,6 +152,7 @@
                 form:{
                     user_name:""
                 },
+                iphone:'13325140285',
                 options: [],
                 selectedOptions2: [],
                 selectedOptions: [],
@@ -171,6 +172,7 @@
                         if(result.data.code==1){
                             var arr=result.data.data[0];
                             this.email=arr.email;
+                            var phone=this.phone;
                         }
                     
                     })
