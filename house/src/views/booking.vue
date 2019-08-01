@@ -55,15 +55,15 @@
       </div>
       <div>
         <div class="dingdan">退订规则</div>
-        <div>未入住/提前离店 收取剩余房费的50%</div>
+        <div class="nvs">未入住/提前离店 收取剩余房费的50%</div>
       </div>
-      <div>
+      <div class="nas">
         <p>全额预付：需预付全额房费</p>
         <p>无需确认：预定无需等待，订单闪电确认</p>
-        <div>
+        <div class="foolr">
           <el-checkbox v-model="checked"></el-checkbox>
           <span>我已阅读并同意<a href="javascript:;">《艺家网服务条款》 </a> 和上述入住须知</span>
-          <div><el-button type="primary">提交订单</el-button></div>
+          <div  class="btn"><el-button type="primary">提交订单</el-button></div>
         </div>
       </div>
     </div>
@@ -164,5 +164,27 @@ export default {
   }
   .input-with-select{
     width: 35%;
+  }
+  .nvs{
+    width: 90%;
+    padding-bottom: 2%;
+    border-bottom:1px solid #ccc;
+    font-size: 15px;
+    margin:3% 0 0 5%;
+    color: #aaa;
+  }
+  .nas{
+    margin-left: 5%;
+    font-size: 15px;
+    color: #aaa;
+  }
+  .foolr{
+    text-align: center;
+  }
+  a{
+    list-style: none;
+  }
+  .btn{
+    margin: 3% 0 3% 0;
   }
 </style>
