@@ -67,7 +67,7 @@ export default {
   height: 900px;
 }
 .tabs{
-  padding-left : 20%;
+  padding-left : 10%;
   padding-top: 5%;
 }
 .smbg{
