@@ -1,5 +1,9 @@
 <template>
   <div>
+    
+      <navtop class="head"></navtop>
+    
+    
     <div class="nav">
       <div>
         <div class="dingdan">订单信息</div>
@@ -67,9 +71,19 @@
         </div>
       </div>
     </div>
+    <div class="pric">
+      <img :src="'http://127.0.0.1:3000/'+lista[0].hic" >
+      <h4>{{lista[0].title}}</h4>
+      <span class="pay">线上支付：</span>
+      <span class="money">¥{{days*lista[0].price}}</span>
+    </div>
+    <div id="d1"></div>
+    <hflooter class="floot"></hflooter>
   </div>
 </template>
 <script>
+import Hflooter from "../components/Hflooter"
+import navtop from "../components/navtop"
 export default {
   data(){
     return {
@@ -127,16 +141,44 @@ export default {
         cphone:'',
         input5: '',
       select: '',
-      checked: true
+      checked: true,
+      days:'',
+      hid:sessionStorage.getItem("hid"),
+      lista:[]
     }
+  } ,
+  methods: {
+    
+  },
+  mounted(){
+    one:{
+      this.days=(this.value7[1]-this.value7[0])/1000/3600/24;
+      var obj={hid:this.hid}
+      this.axios.get("/del",{params:obj}).then(res=>{
+        this.lista=res.data.data
+        
+      })
+    }
+  },
+  watch: {
+    value7:function(){
+      this.days=(this.value7[1]-this.value7[0])/1000/3600/24;
+    }
+  },
+  components:{
+    "navtop":navtop,
+    "hflooter":Hflooter,
   }
 }
+
 </script>
 <style scoped>
  .nav{
    width: 65%;
-   margin-left: 10%;
+   margin:8% 0 0 10%;
    border: 1px solid #ccc;
+   float: left;
+
  }
   .nav>div{
     margin-top: 3%;
@@ -186,5 +228,37 @@ export default {
   }
   .btn{
     margin: 3% 0 3% 0;
+  }
+  .pric{
+    width: 20%;
+    float: right;
+    border: 1px solid #ccc;
+    margin:8% 3% 0 0;
+  }
+  .pric>img{
+    width: 100%;
+  }
+  h4{
+    padding-left: 5%;
+  }
+  .pay{
+    font-size: 15px;
+    color: #666;
+    padding-left: 5%;
+  }
+  .money{
+    font-size: 20px;
+    color: cornflowerblue;
+    text-align: right;
+  }
+  .head{
+    width: 100%;
+    margin:0;
+  }
+  .foolr{
+    width: 100%;
+  }
+  #d1{
+    clear: both;
   }
 </style>

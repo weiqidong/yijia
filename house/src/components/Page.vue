@@ -5,7 +5,7 @@
         <el-input v-model="phone" class="elin" placeholder="请输入手机号"></el-input><span>{{phonet}}</span>
         <!-- 密码 -->
         <el-input v-model="upwd" class="elup" type="password" placeholder="请输入密码"></el-input><span>{{upwdt}}</span>
-        <a href="javascript:;">忘记密码?</a>
+        <div><a href="javascript:;">忘记密码?</a></div>
         <!-- 登陆按钮 -->
         <el-button class="elbutt" type="primary" @click="onlogin">登陆</el-button>
     </div>
@@ -56,23 +56,23 @@
 </script>
 <style scoped>
 .el-input,.el-button{
-  width: 350px !important;
+  width: 300px !important;
 }
 .child1{
   width: 450px;
 
 }
 .elin {
-  width: 300px;
+  width: 400px;
   margin-bottom: 20px;
 }
 .elup{
-  width: 300px;
+  width: 400px;
   margin-bottom: 20px;
 }
 span{
   color: #f00;
-  font-size: 12px;
+  font-size: 10px;
 }
 a{
   margin-left: 50%;

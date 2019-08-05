@@ -24,8 +24,8 @@
           </div>
         </div>
         <div class="house-detail">
-          {{item.h_layout}}/{{item.h_grade}}/{{item.Layout}}
-          <a href="#"><span><b>4.9</b>分</span>/172条评论</a>
+          {{item.h_layout}}{{item.h_grade}}{{item.Layout}}
+          <a href="#"><span><b>4.9</b>分</span>172条评论</a>
         </div>
       </li>
       <!--  

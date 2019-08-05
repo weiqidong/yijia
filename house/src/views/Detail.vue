@@ -91,7 +91,8 @@ export default {
   },
   methods: {
       onre(){
-        
+        sessionStorage.setItem("hid",this.hid)
+        this.$router.push("/booking");
       }
   },
   mounted(){
@@ -100,7 +101,6 @@ export default {
       var obj={hid:this.hid}
       this.axios.get("/del",{params:obj}).then(res=>{
         this.lista=res.data.data
-        
       })
     }
   },
