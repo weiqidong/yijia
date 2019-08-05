@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 var pool = mysql.createPool({
         host: "127.0.0.1",
         user: "root",
-        password: "12345678",
+        password: "",
         port: 3306,
         database: "yijia",
         connectionLimit: 15

@@ -1,5 +1,6 @@
     <template>
         <div id="container">
+            <navtop></navtop>
             <div id="center">
                 <el-container>
                     <el-aside>
@@ -139,9 +140,12 @@
                     </el-main>
                 </el-container>
             </div>
+            <Hflooter></Hflooter>
         </div>
     </template>
     <script>
+    import navtop from '../components/navtop'
+    import Hflooter from '../components/Hflooter'
     export default {
         data(){
             return {
@@ -161,6 +165,10 @@
                 selectedOptions: [],
                 dialogFormVisible: false,
             }
+        },
+        components:{
+            'navtop':navtop,
+            'Hflooter':Hflooter
         },
         created(){
 
@@ -310,6 +318,7 @@
     #center{
         width:1000px;
         margin:0 auto;
+        padding:80px;
     }
     #img{
         width:70px;

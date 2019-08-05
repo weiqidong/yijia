@@ -4,7 +4,7 @@
       <li class="list_li" v-for="(item,i) of list" :key="i">
         <div class="top-img" @click="loadThree(item.hid,cname)" :data-id="item.hid">
           <a href="javascript:;">
-            <img :src="'http://127.0.0.1:3000/'+item.hic" alt="">
+            <img :src="'http://127.0.0.1:3000/'+item.hic">
           </a>
         </div>
         <div class="house-title">

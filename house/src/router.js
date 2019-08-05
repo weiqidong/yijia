@@ -21,7 +21,10 @@ import UserInfo from './components/UserInfo.vue'
 import Booking from './views/booking.vue'
 Vue.use(Router)
 
-export default new Router({
+// 全局路由守卫
+
+
+const router= new Router({
     routes: [{
             path: '/',
 
@@ -29,7 +32,11 @@ export default new Router({
         }, {
             path: '/UserInfo',
 
-            component: UserInfo
+            component: UserInfo,
+            meta: {
+                needLogin: true, // 需要登录
+                 keepAlive: true // 需要被缓存
+              }
         },
         {
             path: '/about',
@@ -124,3 +131,21 @@ export default new Router({
         { path: '/booking', component: Booking }
     ]
 })
+router.beforeEach((to, from, next) => {
+    let isLogin = sessionStorage.getItem("phone"); 
+    if (to.meta.needLogin) {  // 判断该路由是否需要登录权限
+      if (isLogin) { // 判断是否已经登录
+        next()
+      }
+      else {
+        next({
+          path: '/login',
+          query: {redirect: to.fullPath},  // 将跳转的路由path作为参数，登录成功后跳转到该路由
+        })
+      }
+    }
+    else {
+      next()
+    }
+  })
+  export default router;
