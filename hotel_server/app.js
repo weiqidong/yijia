@@ -257,6 +257,33 @@ server.post('/userinfo', (req, res) => {
     })
 })
 
+//用户个人信息修改
+server.get('/update',(req,res)=>{
+    var obj=req.query;
+    var sql="UPDATE yijia_user SET uname=?,gender=?,birthday=?,user_name=?,email=?,phone=?,home=?,city=?,hobby=? WHERE uid=?";
+    pool.query(sql,[obj.uname,obj.gender,obj.birthday,obj.user_name,obj.email,obj.phone,obj.home,obj.city,obj.hobby,obj.uid],(err,result)=>{
+        if(err) throw err;
+        if(result.affectedRows>0){
+            res.send({code:1,data:"提交成功！"})
+        }
+    })
+})
+
+server.post('/upwd',(req,res)=>{
+    var obj=req.body;
+    var sql="UPDATE yijia_user SET upwd=? WHERE upwd=?";
+    pool.query(sql,[obj.upwd,obj.upwd1],(err,result)=>{
+        if(err) throw err;
+        if(result.affectedRows>0){
+            res.send({code:1,data:'修改密码成功！'})
+        }else{
+            res.send({code:0,data:'原始密码错误！'})
+        }
+    })
+})
+
+
+
 /*
 //7.查询指定用户购物车列表
 server.get("/cart", (req, res) => {

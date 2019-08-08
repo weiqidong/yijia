@@ -42,8 +42,8 @@
                                 <span>个人中心</span>
                             </div>
                             <ul>
-                                <li><a href="javascript:;">个人资料</a></li>
-                                <li><a href="javascript:;">修改密码</a></li>
+                                <li><a @click="show1" href="javascript:;">个人资料</a></li>
+                                <li><a @click="show2" href="javascript:;">修改密码</a></li>
                                 <li><a href="javascript:;">我的收藏</a></li>
                                 <li><a href="javascript:;">常用入住人</a></li>
                                 <li><a href="javascript:;">我的发票</a></li>
@@ -53,7 +53,7 @@
                             </ul>
                         </el-card>
                     </el-aside>
-                    <el-main>
+                    <el-main v-if="show">
                         <el-card>
                             <div slot="header">
                                 <span>资料</span>
@@ -136,6 +136,28 @@
                                     </el-dialog>
                                 <span></span>
                             </el-form-item>
+                            <el-form-item>
+                                <el-button class="btn" type="primary" @click="submit">提交</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </el-main>
+                    <el-main v-if="!show">
+                        <el-form>
+                            <el-form-item label="原始密码：">
+                                <el-input autofocus type="password" v-model="upwd" @blur="pwds"></el-input>
+                                <span>{{pwd}}</span>
+                            </el-form-item>
+                            <el-form-item label="修改密码：">
+                                <el-input type="password" v-model="upwd1" @blur="pwds"></el-input>
+                                <span>{{pwd}}</span>
+                            </el-form-item>
+                            <el-form-item label="确认密码：">
+                                <el-input type="password" v-model="upwd2" @blur="check"></el-input>
+                                <span>{{p}}</span>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button class="btn" type="primary" @click="pwd">修改</el-button>
+                            </el-form-item>
                         </el-form>
                     </el-main>
                 </el-container>
@@ -164,6 +186,12 @@
                 selectedOptions2: [],
                 selectedOptions: [],
                 dialogFormVisible: false,
+                show:true,
+                upwd:'',
+                upwd1:'',
+                upwd2:'',
+                pwd:'',
+                p:''
             }
         },
         components:{
@@ -176,6 +204,60 @@
            this.city();
         },
         methods: {
+            pwd(){
+                let params = new URLSearchParams();
+                params.append('upwd',this.upwd1);
+                params.append('upwd1',this.upwd);
+                this.axios.post('/upwd',params,{headers:{'Content-Type':'application/x-www-form-urlencoded'}}).then(result=>{
+                    this.$message({
+                        message:result.data.data
+                    })
+                })
+            },
+            check(){
+                if(this.upwd1==this.upwd2){
+                    this.p="";
+                }else{
+                    this.p="两次输入不一致";
+                }
+            },
+            pwds(){
+                var pwda=/^\w{6,18}$/
+                if(this.upwd==""){
+                    this.pwd="*密码不能为空"
+                }else{
+                    if(!pwda.test(this.upwd)){
+                    this.pwd="*请输入6~18位数字或者字母"
+                    }else{
+                    this.pwd=""
+                    }
+                }
+            },
+            show2(){
+                this.show=false;
+            },
+            show1(){
+                this.show=true;
+            },
+            submit(){
+                var obj={
+                    uname:this.uname,
+                    gender:this.sex,
+                    birthday:this.birthday,
+                    user_name:this.form.user_name,
+                    email:this.email,
+                    phone:this.phone,
+                    home:this.handleChange,
+                    city:this.handleChange1,
+                    hobby:this.checkedHobbies.toString(),
+                    uid:sessionStorage.getItem('uid')
+                }
+                this.axios.get('/update',{params:obj}).then(result=>{
+                     this.$message({
+                        message:result.data.data
+                    })
+                })
+            },
             load(){
                     this.phone=sessionStorage.getItem('phone');
                     let params = new URLSearchParams();
@@ -191,7 +273,7 @@
                             this.sex=arr.gender;
                             this.birthday=arr.birthday;
                             this.form.user_name=arr.user_name;
-
+                            sessionStorage.setItem('uid',arr.uid);
                         }
                     
                     })
@@ -253,16 +335,19 @@
                 })
             },
             handleChange(value) {
-                console.log(value);
+                return value.toString();
             },
             handleChange1(value) {
-                console.log(value);
+                return value.toString();
             }
 
         },
     }
     </script>
     <style>
+    .btn{
+        width:100px;
+    }
     .el-container{
         justify-content: center;
     }
