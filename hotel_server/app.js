@@ -282,7 +282,16 @@ server.post('/upwd',(req,res)=>{
     })
 })
 
-
+// 10:查询房屋级别的信息  h_grade
+server.get("/house_rank",(req,res)=>{
+    var n=req.query.cid;
+    var sql="SELECT title,hic,price,addr_detail,h_layout,Layout FROM yijia_house WHERE cid=? AND h_grade='高档'"
+    pool.query(sql,[n],(err,result)=>{
+        if(err) throw err;
+        res.send({code:1,data:result})
+        
+    })
+})
 
 /*
 //7.查询指定用户购物车列表

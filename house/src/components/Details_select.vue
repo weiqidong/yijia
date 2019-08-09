@@ -102,8 +102,8 @@
       </div>
       <div class="details-select-fw">
         <div class="select-fw">房屋级别</div>
-        <el-checkbox-group v-model="List">
-          <el-checkbox label="豪华" @click="select"></el-checkbox>
+        <el-checkbox-group v-model="List" @change="select($event)">
+          <el-checkbox label="豪华"></el-checkbox>
           <el-checkbox label="高档"></el-checkbox>
           <el-checkbox label="舒适"></el-checkbox>
         </el-checkbox-group>
@@ -188,16 +188,19 @@ export default {
   data(){
     return {
       checkList:[],
-      List:["豪华"],
+      List:[],
       list_rank:[]
     }
   },
+  props:["cid"],
   methods: {
-    select(){
+    select(e){
       var url="/house_rank";
-      var obj={};
+      var obj={cid:this.cid};
       this.axios.get(url,{params:obj}).then(result=>{
+        console.log(result);
         this.list_rank=result.data;
+        console.log(this.list_rank.data);
       })
     }
   },
