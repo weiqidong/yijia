@@ -5,7 +5,7 @@
     <div class="main">
       <details-bread :cname="cname"></details-bread>
       <details-input></details-input>
-      <details-select></details-select>
+      <details-select :cid="cid"></details-select>
       <details-image :cid="cid" :cname="cname"></details-image>
       <!-- <details-page></details-page> -->
       <div class="foot">
