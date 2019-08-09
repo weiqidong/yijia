@@ -271,8 +271,8 @@ server.get('/update',(req,res)=>{
 
 server.post('/upwd',(req,res)=>{
     var obj=req.body;
-    var sql="UPDATE yijia_user SET upwd=? WHERE upwd=?";
-    pool.query(sql,[obj.upwd,obj.upwd1],(err,result)=>{
+    var sql="UPDATE yijia_user SET upwd=? WHERE upwd=? AND uid=?";
+    pool.query(sql,[obj.upwd,obj.upwd1,obj.uid],(err,result)=>{
         if(err) throw err;
         if(result.affectedRows>0){
             res.send({code:1,data:'修改密码成功！'})

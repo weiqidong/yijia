@@ -156,7 +156,7 @@
                                 <span>{{p}}</span>
                             </el-form-item>
                             <el-form-item>
-                                <el-button class="btn" type="primary" @click="pwd">修改</el-button>
+                                <el-button class="btn" type="primary" @click="pwdd">修改</el-button>
                             </el-form-item>
                         </el-form>
                     </el-main>
@@ -204,23 +204,34 @@
            this.city();
         },
         methods: {
-            pwd(){
+            //修改密码
+            pwdd(){
                 let params = new URLSearchParams();
                 params.append('upwd',this.upwd1);
                 params.append('upwd1',this.upwd);
+                params.append('uid',sessionStorage.getItem('uid'));
                 this.axios.post('/upwd',params,{headers:{'Content-Type':'application/x-www-form-urlencoded'}}).then(result=>{
+                    // console.log(result);                    
                     this.$message({
                         message:result.data.data
-                    })
+                    });
+                    this.upwd="";
+                    this.upwd1="";
+                    this.upwd2="";
                 })
             },
+            //检查两次密码输入是否一致
             check(){
-                if(this.upwd1==this.upwd2){
+                if(this.upwd2==""){
+                    this.p="密码不能为空"
+                }
+                else if(this.upwd1==this.upwd2){
                     this.p="";
                 }else{
                     this.p="两次输入不一致";
                 }
             },
+            //正则检验密码是否符合要求
             pwds(){
                 var pwda=/^\w{6,18}$/
                 if(this.upwd==""){
@@ -239,6 +250,7 @@
             show1(){
                 this.show=true;
             },
+            //修改个人信息
             submit(){
                 var obj={
                     uname:this.uname,
@@ -258,6 +270,7 @@
                     })
                 })
             },
+            //加载城市
             load(){
                     this.phone=sessionStorage.getItem('phone');
                     let params = new URLSearchParams();
